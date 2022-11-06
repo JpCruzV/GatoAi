@@ -30,4 +30,25 @@ public class GameController : MonoBehaviour {
             ticTacToeSpaces[i].GetComponent<Image>().sprite = null;
         }
     }
+
+
+    public void TicTacToeBtn(int btn) {
+
+        ticTacToeSpaces[btn].image.sprite = playerIcons[turn];
+        ticTacToeSpaces[btn].interactable = false;
+
+
+        if (turn == 0) {
+
+            turn = 1;
+            turnIcons[0].SetActive(false);
+            turnIcons[1].SetActive(true);
+        }
+        else {
+
+            turn = 0;
+            turnIcons[0].SetActive(true);
+            turnIcons[1].SetActive(false);
+        }
+    }
 }
