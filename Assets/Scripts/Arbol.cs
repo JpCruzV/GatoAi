@@ -2,71 +2,104 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arbol : MonoBehaviour {
+public class Arbol : MonoBehaviour
+{
+
+    public Nodo root;
+    Nodo currentNode;
+
+    public class Nodo
+    {
+
+        public int score;
+        public int height;
+        public Tablero board;
+        public List<Nodo> children;
 
 
-    public int score;
-    public int height;
-    public Tablero board;
-    public List<Arbol> children;
+        public Nodo(int height, Tablero board)
+        {
+
+            this.board = board;
+            this.height = height;
+            children = new List<Nodo>();
 
 
-    public Arbol(int height, Tablero board) {
+            if (board.getEstado() == 0)
+            {
+
+                score = 0;
 
 
-        this.board = board;
-        this.height = height;
-        children = new List<Arbol>();
+                for (int row = 0; row < 3; ++row)
+                {
+
+                    for (int col = 0; col < 3; ++col)
+                    {
 
 
-        if (board.getEstado() == 0) {
+                        if (this.board.setPosition(' ', col, row) == ' ')
+                        {
 
-            score = 0;
-
-
-            for (int row = 0; row < 3; ++row) {
-
-                for (int col = 0; col < 3; ++col) {
+                            Tablero newBoard = this.board.cloneTablero();
 
 
-                    if (this.board.setPosition(' ', col, row) == ' ') {
+                            if (height % 2 == 0)
+                            {
 
-                        Tablero newBoard = this.board.cloneTablero();
+                                newBoard.setPosition('X', col, row);
+                            }
+                            else
+                            {
+
+                                newBoard.setPosition('O', col, row);
+                            }
 
 
-                        if (height % 2 == 0) {
+                            Nodo newNode = new Nodo(this.height + 1, newBoard);
+                            children.Add(newNode);
 
-                            newBoard.setPosition('X', col, row);
+
+                            if (newNode.score > score)
+                                score = newNode.score - 1;
                         }
-                        else {
-
-                            newBoard.setPosition('O', col, row);
-                        }
-
-
-                        Arbol newNode = new Arbol(this.height + 1, newBoard);
-                        children.Add(newNode);
-
-
-                        if (newNode.score > score)
-                            score = newNode.score - 1;
                     }
                 }
             }
-        }
-        else if (board.getEstado() == 1) {
+            else if (board.getEstado() == 1)
+            {
 
-            score = 18 - height;
-        }
-        else if (board.getEstado() == -1) {
+                score = 18 - height;
+            }
+            else if (board.getEstado() == -1)
+            {
 
-            //score = -10 + height;
+                score = -1 * (-18 + height);
+            }
         }
     }
-    /*
-    public Arbol FindNodeInChildren(Board board)
+    public Nodo FindNodeInChildren(Tablero _board)
     {
-    // Busca cuál de los hijos del currentNode tiene un tablero igual al parametro board
+        // Busca cuál de los hijos del currentNode tiene un tablero igual al parametro board
+        if (root.children.Count == 0)
+        {
+
+            return root;
+        }
+        else
+        {
+            root = currentNode.children[0];
+            
+            foreach (Nodo x in currentNode.children)
+            {
+
+                if (x.board == _board)
+                {
+                    currentNode = x;
+                    return currentNode;
+                }
+            }
+        }
+        return null;
     }
-    */
 }

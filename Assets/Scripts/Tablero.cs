@@ -17,7 +17,7 @@ public class Tablero : MonoBehaviour {
 
             for (int col = 0; col < 3; ++col) {
 
-                tablero[linea, col] = 'n';
+                tablero[linea, col] = ' ';
             }
         }
     }
