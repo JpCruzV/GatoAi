@@ -1962,6 +1962,7 @@ MonoBehaviour:
   - {fileID: 1599584653}
   - {fileID: 426955476}
   - {fileID: 880811372}
+  markedSpaces: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 --- !u!4 &1804511101
 Transform:
   m_ObjectHideFlags: 0
