@@ -86,7 +86,24 @@ public class Tablero : MonoBehaviour {
         return estado;
     }
 
-
+    public bool Equals(Tablero board) 
+    {
+        for (int row = 0; row < 3; ++row)
+        {
+            for (int col = 0; col < 3; col++)
+            {
+                if (board.setPosition('X', col, row) == setPosition('X', col, row) && board.setPosition('O', col, row) == setPosition('O', col, row))
+                {
+                    return true;
+                }
+                else if (board.setPosition('X', col, row) != setPosition('X', col, row) || board.setPosition('O', col, row) != setPosition('O', col, row))
+                {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
 
     public Tablero cloneTablero() {
 

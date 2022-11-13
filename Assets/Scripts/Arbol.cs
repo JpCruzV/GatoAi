@@ -30,7 +30,6 @@ public class Arbol : MonoBehaviour
 
                 score = 0;
 
-
                 for (int row = 0; row < 3; ++row)
                 {
 
@@ -76,14 +75,15 @@ public class Arbol : MonoBehaviour
 
                 score = -1 * (-18 + height);
             }
+            Debug.Log(children.Count);
         }
     }
+
     public Node FindNodeInChildren(Tablero _board)
     {
         // Busca cuál de los hijos del currentNode tiene un tablero igual al parametro board
         if (root.children.Count == 0)
         {
-
             return root;
         }
         else
@@ -93,7 +93,7 @@ public class Arbol : MonoBehaviour
             foreach (Node x in currentNode.children)
             {
 
-                if (x.board == _board)
+                if (x.board.Equals(_board))
                 {
                     currentNode = x;
                     return currentNode;
