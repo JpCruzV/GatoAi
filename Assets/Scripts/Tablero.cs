@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tablero : MonoBehaviour {
+public class Tablero : Arbol {
 
 
     public char[,] tablero;
@@ -86,6 +86,7 @@ public class Tablero : MonoBehaviour {
         return estado;
     }
 
+
     public bool Equals(Tablero board) 
     {
         for (int row = 0; row < 3; ++row)
@@ -104,6 +105,7 @@ public class Tablero : MonoBehaviour {
         }
         return false;
     }
+
 
     public Tablero cloneTablero() {
 

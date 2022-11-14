@@ -5,24 +5,24 @@ using UnityEngine;
 public class Arbol : MonoBehaviour
 {
 
-    public Node root;
-    Node currentNode;
+    public Nodo root;
+    Nodo currentNode;
 
-    public class Node
+    public class Nodo
     {
 
         public int score;
         public int height;
         public Tablero board;
-        public List<Node> children;
+        public List<Nodo> children;
 
 
-        public Node(int height, Tablero board)
+        public Nodo(int height, Tablero board)
         {
 
             this.board = board;
             this.height = height;
-            children = new List<Node>();
+            children = new List<Nodo>();
 
 
             if (board.getEstado() == 0)
@@ -55,7 +55,7 @@ public class Arbol : MonoBehaviour
                             }
 
 
-                            Node newNode = new Node(this.height + 1, newBoard);
+                            Nodo newNode = new Nodo(this.height + 1, newBoard);
                             children.Add(newNode);
 
 
@@ -79,7 +79,7 @@ public class Arbol : MonoBehaviour
         }
     }
 
-    public Node FindNodeInChildren(Tablero _board)
+    public Nodo FindNodeInChildren(Tablero _board)
     {
         // Busca cuál de los hijos del currentNode tiene un tablero igual al parametro board
         if (root.children.Count == 0)
@@ -90,7 +90,7 @@ public class Arbol : MonoBehaviour
         {
             root = currentNode.children[0];
             
-            foreach (Node x in currentNode.children)
+            foreach (Nodo x in currentNode.children)
             {
 
                 if (x.board.Equals(_board))
