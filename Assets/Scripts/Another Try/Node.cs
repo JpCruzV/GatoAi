@@ -2,132 +2,171 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : Tree {
-
+public class Node : MonoBehaviour {
 
     public int score = 0;
     public int height;
-    public Board board;
+    public Board boardInNode;
     public List<Node> children;
 
-    Vector2 bestMove;
+    //int ai = 0;
 
+    /*
+    public Node(int height, Board b)
+    {
 
-    public Node(int height, Board b) {
-
-        this.board = b;
+        this.boardInNode = b;
         this.height = height;
         children = new List<Node>();
 
         int _score = 0;
 
 
-        if (b.GetState() == 0) {
+        if (b.GetState() == 0)
+        {
 
-            float bestScore = Mathf.NegativeInfinity;
+            float bestScore = -1000;
+            int bestRowMove = -1;
+            int bestColMove = -1;
+
+            for (int row = 0; row < 3; ++row)
+            {
+                for (int col = 0; col < 3; ++col)
+                {
 
 
-            for (int row = 0; row < 3; ++row) {
-
-                for (int col = 0; col < 3; ++col) {
-
-
-                    if (b._board[row, col] == ' ') {
+                    if (b.grid[row, col] == ' ')
+                    {
 
                         Board newBoard = b.Clone();
-                        newBoard.SetChar('X', col, row);
+                        newBoard.SetChar('X', row, col);
+                        _score = Minimax(newBoard, 0, false);
 
-                        _score = Minimax(newBoard, height, false);
+                        if (_score > bestScore)
+                        {
 
-                        if (_score > bestScore) {
-
-                            bestScore = _score;
-                            b.SetChar('X', row, col);
-                            bestMove = new Vector2(row, col);
+                            bestScore = score;
+                            bestRowMove = row;
+                            bestColMove = col;
                         }
-
-                        Node newNode = new Node(this.height + 1, newBoard);
-                        children.Add(newNode);
-
-
-                        if (newNode.score > _score)
-                            _score = newNode.score - 1;
                     }
                 }
             }
-        }
-        else if (board.GetState() == 1) {
 
-            score = 18 - height;
+            b.SetChar('X', bestRowMove, bestColMove);
         }
-        else if (board.GetState() == -1) {
+    }
+    */
 
-            score = -1 * (-18 + height);
+    public void MinimaxCall(int height, Board b) {
+
+        this.boardInNode = b;
+        this.height = height;
+        children = new List<Node>();
+
+        int _score = 0;
+
+
+        if (b.GetState() == 0)
+        {
+
+            float bestScore = -1000;
+            int bestRowMove = -1;
+            int bestColMove = -1;
+
+            for (int row = 0; row < 3; ++row)
+            {
+                for (int col = 0; col < 3; ++col)
+                {
+
+
+                    if (b.grid[row, col] == ' ')
+                    {
+
+                        Board newBoard = b.Clone();
+                        newBoard.SetChar('X', row, col);
+                        _score = Minimax(newBoard, 0, false);
+
+                        if (_score > bestScore)
+                        {
+
+                            bestScore = score;
+                            bestRowMove = row;
+                            bestColMove = col;
+                        }
+                    }
+                }
+            }
+
+            b.SetChar('X', bestRowMove, bestColMove);
         }
-        Debug.Log(children.Count);
     }
 
 
-    int Minimax(Board b, int h, bool isMaximizing) {
+
+    public int Minimax(Board b, int h, bool isMaximizing) {
 
         int _score = 0;
 
         if (b.GetState() != 0) {
 
-            _score = b.GetState();
+            return _score;
         }
 
-        if (isMaximizing) {
+        if (isMaximizing)
+        {
 
-            float bestScore = Mathf.NegativeInfinity;
+            int bestScore = -1000;
 
-            for (int row = 0; row < 3; ++row) {
+            for (int row = 0; row < 3; ++row)
+            {
+                for (int col = 0; col < 3; ++col)
+                {
 
-                for (int col = 0; col < 3; ++col) {
 
+                    if (b.grid[row, col] == ' ')
+                    {
 
-                    if (b._board[row, col] == ' ') {
-
-                        b.SetChar('X', row, col);
-                        _score = Minimax(b, h + 1, false);
-                        b.SetChar(' ', row, col);
+                        Board newBoard = b.Clone();
+                        newBoard.SetChar('X', row, col);
+                        _score = Minimax(newBoard, h + 1, false);
 
                         if (_score > bestScore) {
 
-                            bestScore = _score;
-                            b.SetChar('X', row, col);
-                            bestMove = new Vector2(row, col);
+                            bestScore = score;
                         }
                     }
                 }
             }
-            return (int)bestScore;
+            Debug.Log(bestScore);
+            return bestScore;
         }
-        else {
+        else
+        {
+            int bestScore = 1000;
 
-            float bestScore = Mathf.Infinity;
+            for (int row = 0; row < 3; ++row)
+            {
+                for (int col = 0; col < 3; ++col)
+                {
 
-            for (int row = 0; row < 3; ++row) {
 
-                for (int col = 0; col < 3; ++col) {
+                    if (b.grid[row, col] == ' ')
+                    {
 
+                        Board newBoard = b.Clone();
+                        newBoard.SetChar('X', row, col);
+                        _score = Minimax(newBoard, 0, true);
 
-                    if (b._board[row, col] == ' ') {
+                        if (_score > bestScore)
+                        {
 
-                        b.SetChar('0', row, col);
-                        _score = Minimax(b, h + 1, true);
-                        b.SetChar(' ', row, col);
-
-                        if (_score < bestScore) {
-
-                            bestScore = _score;
-                            b.SetChar('0', row, col);
-                            bestMove = new Vector2(row, col);
+                            bestScore = score;
                         }
                     }
                 }
             }
-            return (int)bestScore;
+            return bestScore;
         }
     }
 }

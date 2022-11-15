@@ -21,7 +21,7 @@ public class Tree : GameManager {
 
             foreach (Node x in currentNode.children) {
 
-                if (x.board.Equals(b)) {
+                if (x.boardInNode.Equals(b)) {
 
                     currentNode = x;
                     return currentNode;

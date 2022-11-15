@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
-
+    
     public Text winnerText;
 
     public int turn;
@@ -12,8 +12,9 @@ public class GameManager : MonoBehaviour {
     public GameObject[] turnIcons;
     public Sprite[] playerIcons;
     public Button[] ticTacToeSpaces;
-
-    public Board _board_;
+    
+    public Board board;
+    public Node node;
 
 
     private void Start() {
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour {
         
         if (turn == 0) {
 
+            node.MinimaxCall(0, board);
             AIMoves('X');
         }
     }
@@ -48,129 +50,131 @@ public class GameManager : MonoBehaviour {
 
     public void TicTacToeBtn(int btn) {
 
+        if (board.GetState() == 0) {
 
-        ticTacToeSpaces[btn].image.sprite = playerIcons[turn];
-        ticTacToeSpaces[btn].interactable = false;
+            ticTacToeSpaces[btn].image.sprite = playerIcons[turn];
+            ticTacToeSpaces[btn].interactable = false;
 
-        turnCount++;
+            turnCount++;
 
-        if (turnCount > 4) {
+            if (turn == 0) {
+
+                turn = 1;
+                turnIcons[0].SetActive(false);
+                turnIcons[1].SetActive(true);
+                AlignBoardsOnButtonPressed(btn, 'X');
+            }
+            else {
+
+                turn = 0;
+                turnIcons[0].SetActive(true);
+                turnIcons[1].SetActive(false);
+                AlignBoardsOnButtonPressed(btn, '0');
+            }
 
             Winner();
-        }
-
-        if (turn == 0) {
-
-            turn = 1;
-            AlignBoards(btn, 'X');
-            turnIcons[0].SetActive(false);
-            turnIcons[1].SetActive(true);
-        }
-        else {
-
-            AlignBoards(btn, '0');
-            turn = 0;
-            turnIcons[0].SetActive(true);
-            turnIcons[1].SetActive(false);
         }
     }
 
 
     void Winner() {
 
-        if (_board_.GetState() == 0) {
-
-            winnerText.text = "Tie";
-        }
-        else if (_board_.GetState() == 1) {
+        if (board.GetState() == 1) {
 
             winnerText.text = "X Wins";
             Debug.Log("X Wins");
         }
-        else if (_board_.GetState() == -1) {
+        else if (board.GetState() == -1) {
 
             winnerText.text = "O Wins";
             Debug.Log("O Wins");
         }
     }
 
+    
+    void AlignBoardsOnButtonPressed(int btn, char simbol) {
 
-    void AlignBoards(int btn, char simbol) {
+        if (btn == 0)
+            board.SetChar(simbol, 0, 0);
 
-        if (btn == 0) 
-            _board_.SetChar(simbol, 0, 0);
-        
-        else if (btn == 1) 
-            _board_.SetChar(simbol, 0, 1);
-        
+        else if (btn == 1)
+            board.SetChar(simbol, 0, 1);
+
         else if (btn == 2)
-            _board_.SetChar(simbol, 0, 2);
+            board.SetChar(simbol, 0, 2);
 
         else if (btn == 3)
-            _board_.SetChar(simbol, 1, 0);
+            board.SetChar(simbol, 1, 0);
 
         else if (btn == 4)
-            _board_.SetChar(simbol, 1, 1);
+            board.SetChar(simbol, 1, 1);
 
         else if (btn == 5)
-            _board_.SetChar(simbol, 1, 2);
+            board.SetChar(simbol, 1, 2);
 
         else if (btn == 6)
-            _board_.SetChar(simbol, 2, 0);
+            board.SetChar(simbol, 2, 0);
 
         else if (btn == 7)
-            _board_.SetChar(simbol, 2, 1);
+            board.SetChar(simbol, 2, 1);
 
         else if (btn == 8)
-            _board_.SetChar(simbol, 2, 2);
+            board.SetChar(simbol, 2, 2);
+
+        else
+            Debug.Log("Error Aligning");
     }
 
-
+    
     void AIMoves(char simbol) {
 
-        if (_board_._board[0,0] == simbol) {
+        if (board.grid[0,0] == simbol) {
 
+            Debug.Log(ticTacToeSpaces[0]);
             ticTacToeSpaces[0].onClick.Invoke();
         }
-        else if (_board_._board[0, 1] == simbol)
-        {
+        else if (board.grid[0, 1] == simbol) {
 
+            Debug.Log(ticTacToeSpaces[1]);
             ticTacToeSpaces[1].onClick.Invoke();
         }
-        else if (_board_._board[0, 2] == simbol)
-        {
+        else if (board.grid[0, 2] == simbol) {
 
+            Debug.Log(ticTacToeSpaces[2]);
             ticTacToeSpaces[2].onClick.Invoke();
         }
-        else if (_board_._board[1, 0] == simbol)
-        {
+        else if (board.grid[1, 0] == simbol) {
 
+            Debug.Log(ticTacToeSpaces[3]);
             ticTacToeSpaces[3].onClick.Invoke();
         }
-        else if (_board_._board[1, 1] == simbol)
-        {
+        else if (board.grid[1, 1] == simbol) {
 
+            Debug.Log(ticTacToeSpaces[4]);
             ticTacToeSpaces[4].onClick.Invoke();
         }
-        else if (_board_._board[1, 2] == simbol)
-        {
+        else if (board.grid[1, 2] == simbol) {
 
+            Debug.Log(ticTacToeSpaces[5]);
             ticTacToeSpaces[5].onClick.Invoke();
         }
-        else if (_board_._board[2, 0] == simbol)
-        {
+        else if (board.grid[2, 0] == simbol) {
 
+            Debug.Log(ticTacToeSpaces[6]);
             ticTacToeSpaces[6].onClick.Invoke();
         }
-        else if (_board_._board[2, 1] == simbol)
-        {
+        else if (board.grid[2, 1] == simbol) {
 
+            Debug.Log(ticTacToeSpaces[7]);
             ticTacToeSpaces[7].onClick.Invoke();
         }
-        else if (_board_._board[2, 2] == simbol)
-        {
+        else if (board.grid[2, 2] == simbol) {
 
+            Debug.Log(ticTacToeSpaces[8]);
             ticTacToeSpaces[8].onClick.Invoke();
         }
+
+        else
+            Debug.Log("Error clicking");
     }
 }

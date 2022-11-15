@@ -1,25 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
-public class Board {
+public class Board : MonoBehaviour {
 
-    public char[,] _board;
+    public char[,] grid;
     public int state = 0;
 
 
     public Board() {
 
-        this._board = new char[3, 3];
+        this.grid = new char[3, 3];
 
         for (int row = 0; row < 3; ++row) {
 
             for (int col = 0; col < 3; ++col) {
 
-                _board[row, col] = ' ';
+                grid[row, col] = ' ';
             }
         }
     }
-
 
 
     public int GetState () {
@@ -27,42 +27,42 @@ public class Board {
         for (int i = 0; i < 3; ++i) {
 
 
-            if (_board[i, 0] == 'X' && _board[i, 1] == 'X' && _board[i, 2] == 'X') {
+            if (grid[i, 0] == 'X' && grid[i, 1] == 'X' && grid[i, 2] == 'X') {
 
                 state = 1;
             }
-            else if (_board[i, 0] == '0' && _board[i, 1] == '0' && _board[i, 2] == '0') {
+            else if (grid[i, 0] == '0' && grid[i, 1] == '0' && grid[i, 2] == '0') {
 
                 state = -1;
             }
 
 
-            if (_board[0, i] == 'X' && _board[1, i] == 'X' && _board[2, i] == 'X') {
+            if (grid[0, i] == 'X' && grid[1, i] == 'X' && grid[2, i] == 'X') {
 
                 state = 1;
             }
-            else if (_board[0, i] == '0' && _board[1, i] == '0' && _board[2, i] == '0') {
+            else if (grid[0, i] == '0' && grid[1, i] == '0' && grid[2, i] == '0') {
 
                 state = -1;
             }
         }
 
 
-        if (_board[0, 0] == 'X' && _board[1, 1] == 'X' && _board[2, 2] == 'X') {
+        if (grid[0, 0] == 'X' && grid[1, 1] == 'X' && grid[2, 2] == 'X') {
 
             state = 1;
         }
-        else if (_board[0, 2] == 'X' && _board[1, 1] == 'X' && _board[2, 0] == 'X') {
+        else if (grid[0, 2] == 'X' && grid[1, 1] == 'X' && grid[2, 0] == 'X') {
 
             state = 1;
         }
 
 
-        if (_board[0, 0] == '0' && _board[1, 1] == '0' && _board[2, 2] == '0') {
+        if (grid[0, 0] == '0' && grid[1, 1] == '0' && grid[2, 2] == '0') {
 
             state = -1;
         }
-        else if (_board[0, 2] == '0' && _board[1, 1] == '0' && _board[2, 0] == '0') {
+        else if (grid[0, 2] == '0' && grid[1, 1] == '0' && grid[2, 0] == '0') {
 
             state = -1;
         }
@@ -71,13 +71,15 @@ public class Board {
     }
 
 
-
     public char SetChar(char character, int x, int y) {
 
-        _board[x, y] = character;
-        return character;
-    }
+        if (grid[x, y] == ' ') {
 
+            grid[x, y] = character;
+            return character;
+        }
+        return ' ';
+    }
 
 
     public bool Equals(Board b) {
@@ -101,7 +103,6 @@ public class Board {
     }
 
 
-
     public Board Clone() {
 
         Board boardClone = new Board();
@@ -110,7 +111,7 @@ public class Board {
 
             for (int j = 0; j < 3; ++j) {
 
-                boardClone.SetChar(_board[i, j], i, j);
+                boardClone.SetChar(grid[i, j], i, j);
             }
         }
 
