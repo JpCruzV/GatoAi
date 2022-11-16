@@ -155,7 +155,7 @@ public class Node : MonoBehaviour {
                     {
 
                         Board newBoard = b.Clone();
-                        newBoard.SetChar('X', row, col);
+                        newBoard.SetChar('0', row, col);
                         _score = Minimax(newBoard, 0, true);
 
                         if (_score > bestScore)
