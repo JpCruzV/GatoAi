@@ -9,7 +9,10 @@ public class Node : MonoBehaviour {
     public Board boardInNode;
     public List<Node> children;
 
-    //int ai = 0;
+    char ai = 'X';
+    char human = '0';
+
+    char currentPlayer;
 
     /*
     public Node(int height, Board b)
@@ -57,6 +60,10 @@ public class Node : MonoBehaviour {
         }
     }
     */
+    private void Start() {
+
+        currentPlayer = ai;
+    }
 
     public void MinimaxCall(int height, Board b) {
 
@@ -70,7 +77,7 @@ public class Node : MonoBehaviour {
         if (b.GetState() == 0)
         {
 
-            float bestScore = -1000;
+            float bestScore = 0;
             int bestRowMove = -1;
             int bestColMove = -1;
 

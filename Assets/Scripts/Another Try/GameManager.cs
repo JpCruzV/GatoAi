@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     
@@ -27,8 +28,17 @@ public class GameManager : MonoBehaviour {
         
         if (turn == 0) {
 
-            node.MinimaxCall(0, board);
-            AIMoves('X');
+            //node.MinimaxCall(0, board);
+            //AIMoves('X');
+        }
+
+        if (Winner() == true && Input.GetKeyDown(KeyCode.Space)) {
+
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+
+            Application.Quit();
         }
     }
 
@@ -77,17 +87,26 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    void Winner() {
+    bool Winner() {
 
         if (board.GetState() == 1) {
 
-            winnerText.text = "X Wins";
-            Debug.Log("X Wins");
+            winnerText.text = "X Wins"; 
+            return true;
         }
         else if (board.GetState() == -1) {
 
             winnerText.text = "O Wins";
-            Debug.Log("O Wins");
+            return true;
+        }
+        else if (turnCount >= 9) {
+
+            winnerText.text = "Tie";
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
