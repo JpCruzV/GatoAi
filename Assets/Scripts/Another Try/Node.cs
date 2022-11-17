@@ -65,19 +65,19 @@ public class Node : MonoBehaviour {
         currentPlayer = ai;
     }
 
-    public void MinimaxCall(int height, Board b) {
+    public void MinimaxCall(int height, Board b) { 
 
         this.boardInNode = b;
         this.height = height;
         children = new List<Node>();
 
-        int _score = 0;
+        int _score = 1;
 
 
         if (b.GetState() == 0)
         {
 
-            float bestScore = 0;
+            float bestScore = -10;
             int bestRowMove = -1;
             int bestColMove = -1;
 
@@ -92,7 +92,7 @@ public class Node : MonoBehaviour {
 
                         Board newBoard = b.Clone();
                         newBoard.SetChar('X', row, col);
-                        _score = Minimax(newBoard, 0, false);
+                        _score += Minimax(newBoard, 0, false);
 
                         if (_score > bestScore)
                         {
@@ -100,11 +100,13 @@ public class Node : MonoBehaviour {
                             bestScore = score;
                             bestRowMove = row;
                             bestColMove = col;
+                            Debug.Log(bestRowMove);
+                            Debug.Log(bestColMove);
+                            //b.SetChar('X', bestRowMove, bestColMove);
                         }
                     }
                 }
             }
-
             b.SetChar('X', bestRowMove, bestColMove);
         }
     }
@@ -113,7 +115,7 @@ public class Node : MonoBehaviour {
 
     public int Minimax(Board b, int h, bool isMaximizing) {
 
-        int _score = 0;
+        int _score = 1;
 
         if (b.GetState() != 0) {
 
@@ -123,7 +125,7 @@ public class Node : MonoBehaviour {
         if (isMaximizing)
         {
 
-            int bestScore = -1000;
+            int bestScore = -10;
 
             for (int row = 0; row < 3; ++row)
             {
@@ -136,7 +138,7 @@ public class Node : MonoBehaviour {
 
                         Board newBoard = b.Clone();
                         newBoard.SetChar('X', row, col);
-                        _score = Minimax(newBoard, h + 1, false);
+                        _score += Minimax(newBoard, h + 1, false);
 
                         if (_score > bestScore) {
 
@@ -148,6 +150,8 @@ public class Node : MonoBehaviour {
             Debug.Log(bestScore);
             return bestScore;
         }
+        return _score;
+        /*
         else
         {
             int bestScore = 1000;
@@ -175,5 +179,16 @@ public class Node : MonoBehaviour {
             }
             return bestScore;
         }
+        */
+    }
+
+
+    public bool CompareMiniMaxBoards(Board b) {
+
+        if (boardInNode == b) {  //Equals(boardInNode)) {
+
+            return true;
+        }
+        return false;
     }
 }

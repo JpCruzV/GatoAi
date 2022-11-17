@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour {
     
     public Board board;
     public Node node;
+    public Tree tree;
 
 
     private void Start() {
@@ -28,8 +29,10 @@ public class GameManager : MonoBehaviour {
         
         if (turn == 0) {
 
-            //node.MinimaxCall(0, board);
-            //AIMoves('X');
+            node.MinimaxCall(0, board);
+            Debug.Log(node.CompareMiniMaxBoards(board));
+            //tree.FindNodeInChildren(board);
+            AIMoves('X');
         }
 
         if (Winner() == true && Input.GetKeyDown(KeyCode.Space)) {

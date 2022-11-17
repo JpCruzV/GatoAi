@@ -7,6 +7,8 @@ public class Board : MonoBehaviour {
     public char[,] grid;
     public int state = 0;
 
+    int turnCount;
+
 
     public Board() {
 
@@ -75,6 +77,7 @@ public class Board : MonoBehaviour {
 
         if (grid[x, y] == ' ') {
 
+            turnCount++;
             grid[x, y] = character;
             return character;
         }
@@ -84,22 +87,38 @@ public class Board : MonoBehaviour {
 
     public bool Equals(Board b) {
 
+        int adsfasd = 0;
+
         for (int row = 0; row < 3; ++row) {
 
             for (int col = 0; col < 3; col++) {
 
-
-                if (b.SetChar('X', col, row) == SetChar('X', col, row) && b.SetChar('O', col, row) == SetChar('O', col, row)) {
+                /*
+                if (b.SetChar('X', col, row) == SetChar('X', col, row) && b.SetChar('0', col, row) == SetChar('0', col, row)) {
 
                     return true;
                 }
-                else if (b.SetChar('X', col, row) != SetChar('X', col, row) || b.SetChar('O', col, row) != SetChar('O', col, row)) {
+                else if (b.SetChar('X', col, row) != SetChar('X', col, row) || b.SetChar('0', col, row) != SetChar('0', col, row)) {
 
                     return false;
                 }
+                */
+
+                if (b.grid[row, col] == 'X' && grid[row, col] == 'X') 
+                {
+                    adsfasd += 1;
+                    return true;
+                }
             }
         }
-        return false;
+        if (turnCount == adsfasd)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
 
