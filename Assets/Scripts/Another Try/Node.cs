@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Node : MonoBehaviour {
 
-    public int score = 0;
     public int height;
     public Board boardInNode;
     public List<Node> children;
@@ -119,7 +118,7 @@ public class Node : MonoBehaviour {
         this.height = height;
         children = new List<Node>();
 
-        float bestScore = Mathf.NegativeInfinity;
+        int bestScore = -1000;
         int bestRowMove = -1;
         int bestColMove = -1;
 
@@ -136,10 +135,10 @@ public class Node : MonoBehaviour {
                     if (_score > bestScore && currentPlayer == ai) {
 
                         currentPlayer = human;
-                        bestScore = score;
+                        bestScore = _score;
                         bestRowMove = row;
                         bestColMove = col;
-                        //Debug.Log(bestRowMove  + ", " + bestColMove );
+                        Debug.Log(row + ", " + col);
                         b.SetChar('X', bestRowMove, bestColMove);
                         boardInNode = b;
                     }
@@ -151,7 +150,54 @@ public class Node : MonoBehaviour {
 
     public int Minimax(Board b, int h, bool isMaximizing) {
 
-        return 1;
+        if (boardInNode.GetState() != 0) {
+
+            return boardInNode.GetState();
+        }
+        else if (isMaximizing) {
+
+            int bestScore = -1000;
+
+            for (int row = 0; row < 3; ++row) {
+                for (int col = 0; col < 3; ++col) {
+
+                    if (b.grid[row, col] == ' ') {
+
+                        Board newBoard = b.Clone();
+                        newBoard.SetChar(ai, row, col);
+                        int _score = Minimax(newBoard, h + 1, false);
+
+                        if (_score > bestScore) {
+
+                            bestScore = _score;
+                        }
+                    }
+                }
+            }
+            return bestScore;
+        }
+        else {
+
+            int bestScore = 1000;
+
+            for (int row = 0; row < 3; ++row) {
+                for (int col = 0; col < 3; ++col) {
+
+                    if (b.grid[row, col] == ' ') {
+
+                        Board newBoard = b.Clone();
+                        newBoard.SetChar(human, row, col);
+                        int _score = Minimax(newBoard, h + 1, true);
+
+                        if (_score < bestScore) {
+
+                            bestScore = _score;
+                        }
+                    }
+                }
+            }
+            return bestScore;
+        }
     }
 
 

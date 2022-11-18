@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
     private void Start() {
 
         GameSetUp();
+        node.MinimaxCall(0, board);
     }
 
 
@@ -41,13 +42,6 @@ public class GameManager : MonoBehaviour {
         
         if (turn == 0) {
 
-            //Debug.Log(board.grid[0, 0]);
-            //Debug.Log(board.grid[0, 1]);
-            //Debug.Log(board.grid[0, 2]);
-
-            node.MinimaxCall(0, board);
-            //Debug.Log(node.CompareMiniMaxBoards(board));
-            //tree.FindNodeInChildren(board);
             AIMoves('X');
         }
 
@@ -79,8 +73,7 @@ public class GameManager : MonoBehaviour {
 
     public void TicTacToeBtn(int btn) {
 
-        Debug.Log(turn);
-        Debug.Log(node.currentPlayer);
+        node.MinimaxCall(0, board);
 
         if (board.GetState() == 0) {
 
