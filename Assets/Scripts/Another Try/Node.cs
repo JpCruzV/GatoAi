@@ -12,7 +12,7 @@ public class Node : MonoBehaviour {
     char ai = 'X';
     char human = '0';
 
-    char currentPlayer;
+    public char currentPlayer;
 
     /*
     public Node(int height, Board b)
@@ -65,6 +65,7 @@ public class Node : MonoBehaviour {
         currentPlayer = ai;
     }
 
+    /*
     public void MinimaxCall(int height, Board b) { 
 
         this.boardInNode = b;
@@ -110,9 +111,51 @@ public class Node : MonoBehaviour {
             b.SetChar('X', bestRowMove, bestColMove);
         }
     }
+    */
+
+    public void MinimaxCall(int height, Board b) {
+
+        boardInNode = b;
+        this.height = height;
+        children = new List<Node>();
+
+        float bestScore = Mathf.NegativeInfinity;
+        int bestRowMove = -1;
+        int bestColMove = -1;
+
+        for (int row = 0; row < 3; ++row) {
+
+            for (int col = 0; col < 3; ++col) {
+
+                if (b.grid[row, col] == ' ') {
+
+                    Board newBoard = b.Clone();
+                    newBoard.SetChar(ai, row, col);
+                    int _score = Minimax(newBoard, 0, false);
+
+                    if (_score > bestScore && currentPlayer == ai) {
+
+                        currentPlayer = human;
+                        bestScore = score;
+                        bestRowMove = row;
+                        bestColMove = col;
+                        //Debug.Log(bestRowMove  + ", " + bestColMove );
+                        b.SetChar('X', bestRowMove, bestColMove);
+                        boardInNode = b;
+                    }
+                }
+            }
+        }
+    }
 
 
+    public int Minimax(Board b, int h, bool isMaximizing) {
 
+        return 1;
+    }
+
+
+    /*
     public int Minimax(Board b, int h, bool isMaximizing) {
 
         int _score = 1;
@@ -179,9 +222,9 @@ public class Node : MonoBehaviour {
             }
             return bestScore;
         }
-        */
     }
-
+        */
+    
 
     public bool CompareMiniMaxBoards(Board b) {
 

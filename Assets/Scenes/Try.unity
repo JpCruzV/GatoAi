@@ -2005,7 +2005,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1804511101}
   - component: {fileID: 1804511102}
-  - component: {fileID: 1804511103}
+  - component: {fileID: 1804511106}
   - component: {fileID: 1804511104}
   - component: {fileID: 1804511105}
   m_Layer: 0
@@ -2061,22 +2061,9 @@ MonoBehaviour:
   - {fileID: 1599584653}
   - {fileID: 426955476}
   - {fileID: 880811372}
-  board: {fileID: 1804511103}
+  board: {fileID: 1804511106}
   node: {fileID: 1804511104}
   tree: {fileID: 1804511105}
---- !u!114 &1804511103
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1804511099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a55ae7603be6bf43866f5b2ea042d69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  state: 0
 --- !u!114 &1804511104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2091,8 +2078,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   height: 0
-  boardInNode: {fileID: 1804511103}
+  boardInNode: {fileID: 1804511106}
   children: []
+  currentPlayer: 0
 --- !u!114 &1804511105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2106,6 +2094,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   root: {fileID: 0}
+--- !u!114 &1804511106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804511099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a55ae7603be6bf43866f5b2ea042d69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
 --- !u!1 &1874076986
 GameObject:
   m_ObjectHideFlags: 0

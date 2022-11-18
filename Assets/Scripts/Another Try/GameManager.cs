@@ -19,6 +19,18 @@ public class GameManager : MonoBehaviour {
     public Tree tree;
 
 
+    bool one = false;
+    bool two = false;
+    bool three = false;
+    bool four = false;
+    bool five = false;
+    bool six = false;
+    bool seven = false;
+    bool eight = false;
+    bool nine = false;
+
+
+
     private void Start() {
 
         GameSetUp();
@@ -29,8 +41,12 @@ public class GameManager : MonoBehaviour {
         
         if (turn == 0) {
 
+            //Debug.Log(board.grid[0, 0]);
+            //Debug.Log(board.grid[0, 1]);
+            //Debug.Log(board.grid[0, 2]);
+
             node.MinimaxCall(0, board);
-            Debug.Log(node.CompareMiniMaxBoards(board));
+            //Debug.Log(node.CompareMiniMaxBoards(board));
             //tree.FindNodeInChildren(board);
             AIMoves('X');
         }
@@ -63,6 +79,9 @@ public class GameManager : MonoBehaviour {
 
     public void TicTacToeBtn(int btn) {
 
+        Debug.Log(turn);
+        Debug.Log(node.currentPlayer);
+
         if (board.GetState() == 0) {
 
             ticTacToeSpaces[btn].image.sprite = playerIcons[turn];
@@ -79,14 +98,14 @@ public class GameManager : MonoBehaviour {
             }
             else {
 
+                node.currentPlayer = 'X';
                 turn = 0;
                 turnIcons[0].SetActive(true);
                 turnIcons[1].SetActive(false);
                 AlignBoardsOnButtonPressed(btn, '0');
             }
-
-            Winner();
         }
+        Winner();
     }
 
 
@@ -107,8 +126,8 @@ public class GameManager : MonoBehaviour {
             winnerText.text = "Tie";
             return true;
         }
-        else
-        {
+        else {
+
             return false;
         }
     }
@@ -150,49 +169,50 @@ public class GameManager : MonoBehaviour {
     
     void AIMoves(char simbol) {
 
-        if (board.grid[0,0] == simbol) {
 
-            Debug.Log(ticTacToeSpaces[0]);
+        if (board.grid[0,0] == simbol && one == false) {
+
+            one = true;
             ticTacToeSpaces[0].onClick.Invoke();
         }
-        else if (board.grid[0, 1] == simbol) {
+        else if (board.grid[0, 1] == simbol && two == false) {
 
-            Debug.Log(ticTacToeSpaces[1]);
+            two = true;
             ticTacToeSpaces[1].onClick.Invoke();
         }
-        else if (board.grid[0, 2] == simbol) {
+        else if (board.grid[0, 2] == simbol && three == false) {
 
-            Debug.Log(ticTacToeSpaces[2]);
+            three = true;
             ticTacToeSpaces[2].onClick.Invoke();
         }
-        else if (board.grid[1, 0] == simbol) {
+        else if (board.grid[1, 0] == simbol && four == false) {
 
-            Debug.Log(ticTacToeSpaces[3]);
+            four = true;
             ticTacToeSpaces[3].onClick.Invoke();
         }
-        else if (board.grid[1, 1] == simbol) {
+        else if (board.grid[1, 1] == simbol && five == false) {
 
-            Debug.Log(ticTacToeSpaces[4]);
+            five = true;
             ticTacToeSpaces[4].onClick.Invoke();
         }
-        else if (board.grid[1, 2] == simbol) {
+        else if (board.grid[1, 2] == simbol && six == false) {
 
-            Debug.Log(ticTacToeSpaces[5]);
+            six = true;
             ticTacToeSpaces[5].onClick.Invoke();
         }
-        else if (board.grid[2, 0] == simbol) {
+        else if (board.grid[2, 0] == simbol && seven == false) {
 
-            Debug.Log(ticTacToeSpaces[6]);
+            seven = true;
             ticTacToeSpaces[6].onClick.Invoke();
         }
-        else if (board.grid[2, 1] == simbol) {
+        else if (board.grid[2, 1] == simbol && eight == false) {
 
-            Debug.Log(ticTacToeSpaces[7]);
+            eight = true;
             ticTacToeSpaces[7].onClick.Invoke();
         }
-        else if (board.grid[2, 2] == simbol) {
+        else if (board.grid[2, 2] == simbol && nine == false) {
 
-            Debug.Log(ticTacToeSpaces[8]);
+            nine = true;
             ticTacToeSpaces[8].onClick.Invoke();
         }
 

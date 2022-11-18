@@ -7,8 +7,11 @@ public class Board : MonoBehaviour {
     public char[,] grid;
     public int state = 0;
 
-    int turnCount;
 
+
+    private void Start() {
+
+    }
 
     public Board() {
 
@@ -75,13 +78,8 @@ public class Board : MonoBehaviour {
 
     public char SetChar(char character, int x, int y) {
 
-        if (grid[x, y] == ' ') {
-
-            turnCount++;
-            grid[x, y] = character;
-            return character;
-        }
-        return ' ';
+        grid[x, y] = character;
+        return character;
     }
 
 
@@ -111,14 +109,7 @@ public class Board : MonoBehaviour {
                 }
             }
         }
-        if (turnCount == adsfasd)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
 
