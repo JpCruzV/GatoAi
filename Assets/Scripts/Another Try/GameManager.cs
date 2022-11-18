@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour {
     private void Start() {
 
         GameSetUp();
-        node.MinimaxCall(0, board);
+        //node.MinimaxCall(0, board);
     }
 
 
@@ -42,9 +42,9 @@ public class GameManager : MonoBehaviour {
         
         if (turn == 0) {
 
+            node.MinimaxCall(board);
             AIMoves('X');
         }
-
         if (Winner() == true && Input.GetKeyDown(KeyCode.Space)) {
 
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
@@ -73,31 +73,27 @@ public class GameManager : MonoBehaviour {
 
     public void TicTacToeBtn(int btn) {
 
-        node.MinimaxCall(0, board);
+        ticTacToeSpaces[btn].image.sprite = playerIcons[turn];
+        ticTacToeSpaces[btn].interactable = false;
 
-        if (board.GetState() == 0) {
+        turnCount++;
 
-            ticTacToeSpaces[btn].image.sprite = playerIcons[turn];
-            ticTacToeSpaces[btn].interactable = false;
+        if (turn == 0) {
 
-            turnCount++;
-
-            if (turn == 0) {
-
-                turn = 1;
-                turnIcons[0].SetActive(false);
-                turnIcons[1].SetActive(true);
-                AlignBoardsOnButtonPressed(btn, 'X');
-            }
-            else {
-
-                node.currentPlayer = 'X';
-                turn = 0;
-                turnIcons[0].SetActive(true);
-                turnIcons[1].SetActive(false);
-                AlignBoardsOnButtonPressed(btn, '0');
-            }
+            turn = 1;
+            turnIcons[0].SetActive(false);
+            turnIcons[1].SetActive(true);
+            AlignBoardsOnButtonPressed(btn, 'X');
         }
+        else {
+
+            node.currentPlayer = 'X';
+            turn = 0;
+            turnIcons[0].SetActive(true);
+            turnIcons[1].SetActive(false);
+            AlignBoardsOnButtonPressed(btn, '0');
+        }
+
         Winner();
     }
 
