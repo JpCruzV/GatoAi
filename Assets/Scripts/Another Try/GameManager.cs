@@ -34,17 +34,16 @@ public class GameManager : MonoBehaviour {
     private void Start() {
 
         GameSetUp();
-        //node.MinimaxCall(0, board);
     }
 
 
     private void Update() {
         
-        /*if (turn == 0) {
+        if (turn == 0) {
 
             node.MinimaxCall(board);
             AIMoves('X');
-        }*/
+        }
         if (Winner() == true && Input.GetKeyDown(KeyCode.Space)) {
 
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
